@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data){
+        this->data = data;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
+void preorder(Node* root){
+    if(root == nullptr) return;
+    cout<<root->data<<"->";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+int heightOfTree(Node* root){
+    if(root == nullptr){
+        return 0;
+    }
+    
+    int leftHeight  = height(root->left);
+    int rightHeight = height(root->right);
+    
+    return max(leftHeight,rightHeight) + 1;
+}
+int sumOfTree(Node* root){
+    if(root == nullptr){
+        return 0;
+    }
+    return sumOfTree(root->left) + sumOfTree(root->right) + root->data;
+}
+
+int countNode(Node* root){
+    if(root == nullptr) return 0;
+    return countNode(root->left) + countNode(root->right) + 1;
+}
+
+void levelOrderTraversal(Node* root){ //BreathFirstSearch
+    if(root == nullptr) return;
+    
+    queue<Node*> q;
+    q.push(root);
+    
+    while(!q.empty()){
+        Node* current = q.front();
+        q.pop();
+        
+        cout<<current->data<<" ";
+        if(current->left!= nullptr){
+            q.push(current->left);
+        }
+        if(current->right != nullptr){
+            q.push(current->right);
+        }
+    }
+}
+
+int main(){
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    
+    Node* currentLeft = root->left;
+    Node* currentRight = root->right;
+    
+    
+    currentLeft->left = new Node(4);
+    currentLeft->right = new Node(5);
+    
+    preorder(root);
+    int ht = heightOfTree(root);
+    int st = sumOfTree(root);
+    int ct = countNode(root);
+    
+    cout<<"The height is:"<<ht<<endl;
+    cout<<"The sum is:"<<st;
+}
