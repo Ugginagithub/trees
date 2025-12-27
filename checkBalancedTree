@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data){
+        this->data = data;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
+
+int checkBalancedTree(Node* root){
+    if(root == nullptr) return 0;
+    
+    int leftheight = checkBalancedTree(root->left);
+    if(leftheight == -1) return -1;
+    int rightheight = checkBalancedTree(root->right);
+    if(rightheight == -1) return -1;
+    
+    if(abs(leftheight - rightheight) >1) return -1;
+    
+    return max(leftheight,rightheight)+1;
+}
+
+//A binary tree is said to be balanced if, for every node in the tree, the absolute difference between the heights of its left and right subtrees is at most 1.
+
+bool isBalanced(Node* root){
+    int checked;
+    checked = checkBalancedTree(root);
+    return checked!=-1;
+}
+
+int main(){
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    
+    Node* currentleft = root->left;
+    Node* currentRight = root->right;
+    
+    cout<<isBalanced(root);//result is 1 as it is balanced 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
